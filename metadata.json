@@ -1,0 +1,6 @@
+{
+  "name": "متجر اتحاد المترجمين العرب | Arab Translators Union Store",
+  "description": "متجر اتحاد المترجمين العرب - المنصة الرقمية الرسمية لبيع وتحميل كتب ومراجع الترجمة والقواميس والدورات التدريبية والأدوات الاحترافية للمترجمين. جميع الحقوق محفوظة للدكتورة إيمان الأحمر.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
