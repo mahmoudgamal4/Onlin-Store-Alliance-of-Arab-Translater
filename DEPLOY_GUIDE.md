@@ -51,8 +51,16 @@ NODE_ENV=production npm start
 ```
 *(في حال استخدام Node 20 بدلاً من Node 22، شغّل الخادم عبر: `NODE_ENV=production npx tsx server.ts`)*
 
-### 4. إضافة الدومين في Firebase Auth
-من لوحة تحكم Firebase Authentication -> Settings -> **Authorized domains**، أضف الدومين الجديد حتى يعمل تسجيل الدخول عبر Google وحساب المدير العام `Aleman201451@gmail.com`.
+### 4. النشر على Vercel (Full-Stack جاهز عبر `vercel.json` و `api/index.ts`)
+1. تأكد من رفع المشروع كاملاً بما فيه ملف `vercel.json` ومجلد `api/index.ts`.
+2. في لوحة **Vercel → Settings → Environment Variables** أضف المتغيرات التالية:
+   - `DATABASE_URL` (رابط الاتصال من Supabase → Connect → Transaction Pooler بصيغة `postgresql://...`)
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `APP_URL` (رابط موقعك على فيرسل مثل `https://your-app.vercel.app`)
+3. أعد النشر (**Redeploy**) بعد إضافة المتغيرات.
+4. أضف دومين فيرسل (`your-app.vercel.app`) داخل **Firebase Console → Authentication → Settings → Authorized domains** ثم اضغط **Add**.
 
 ### 5. وسيلة الدفع المفعلة حالياً
 - **فودافون كاش — د/ إيمان الأحمر:** `+20 10 32105770` (مفعلة وجاهزة للاستلام وتفعيل الرخصة من لوحة التحكم `/admin-dashboard`).

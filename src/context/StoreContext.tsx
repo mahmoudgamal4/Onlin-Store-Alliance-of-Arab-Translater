@@ -50,6 +50,12 @@ function formatAuthError(err: any, lang: 'ar' | 'en'): string {
   const code = String(err?.code || '');
   const msg = String(err?.message || '');
 
+  if (code === 'auth/unauthorized-domain' || msg.includes('unauthorized-domain')) {
+    const currentHost = typeof window !== 'undefined' ? window.location.hostname : '';
+    return lang === 'ar'
+      ? `النطاق (${currentHost}) غير مضاف بعد إلى النطاقات المصرح بها (Authorized domains) في Firebase Console. أضف "${currentHost}" من Authentication ← Settings ← Authorized domains ثم أعد المحاولة.`
+      : `Domain (${currentHost}) is not added to Firebase Console Authorized domains yet. Add "${currentHost}" under Authentication -> Settings -> Authorized domains and try again.`;
+  }
   if (code === 'auth/operation-not-allowed' || msg.includes('operation-not-allowed')) {
     return lang === 'ar'
       ? 'تسجيل الدخول بالبريد الإلكتروني وكلمة المرور غير مفعّل في إعدادات Firebase حالياً. يمكنك الدخول فوراً عبر زر "Google" بالأعلى، أو تفعيل مزود Email/Password من لوحة Firebase Console.'

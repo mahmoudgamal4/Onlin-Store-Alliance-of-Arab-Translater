@@ -8,16 +8,26 @@ declare global {
 
 export const createPool = () => {
   if (!global._postgresPool) {
-    global._postgresPool = new Pool({
-      host: process.env.SQL_HOST,
-      port: process.env.SQL_PORT ? Number(process.env.SQL_PORT) : undefined,
-      user: process.env.SQL_USER,
-      password: process.env.SQL_PASSWORD,
-      database: process.env.SQL_DB_NAME,
-      ssl: process.env.SQL_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
-      max: 10,
-      connectionTimeoutMillis: 15000,
-    });
+    const useConnectionString = Boolean(process.env.DATABASE_URL && !process.env.SQL_HOST);
+    global._postgresPool = new Pool(
+      useConnectionString
+        ? {
+            connectionString: process.env.DATABASE_URL,
+            ssl: { rejectUnauthorized: false },
+            max: 5,
+            connectionTimeoutMillis: 15000,
+          }
+        : {
+            host: process.env.SQL_HOST,
+            port: process.env.SQL_PORT ? Number(process.env.SQL_PORT) : undefined,
+            user: process.env.SQL_USER,
+            password: process.env.SQL_PASSWORD,
+            database: process.env.SQL_DB_NAME,
+            ssl: process.env.SQL_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
+            max: 10,
+            connectionTimeoutMillis: 15000,
+          }
+    );
 
     global._postgresPool.on('error', (err) => {
       console.error('Unexpected error on idle SQL pool client:', err);
